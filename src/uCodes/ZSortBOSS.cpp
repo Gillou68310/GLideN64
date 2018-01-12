@@ -133,8 +133,8 @@ void StoreMatrix( f32 mtx[4][4], u32 address )
 	for(i = 0; i < 4; i++) {
 		for(j = 0; j < 4; j++) {
 			fractpart = modf(mtx[i][j], &intpart);
-			n64Mat->integer[i][j^1] = (mtx[i][j] < 0.0) ? (s16)(intpart-1) : (s16)intpart;
 			n64Mat->fraction[i][j^1] = (u16)(fractpart * 65536.f);
+			n64Mat->integer[i][j^1] = ((mtx[i][j] < 0.0) && (n64Mat->fraction[i][j^1] != 0)) ? (s16)(intpart-1) : (s16)intpart;
 		}
 	}
 }
