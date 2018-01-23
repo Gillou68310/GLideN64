@@ -141,11 +141,14 @@ void RSP_ProcessDList()
 			GBI.getMicrocodeType(), *REG.VI_ORIGIN, *REG.VI_WIDTH, dlist_start, dlist_length, (*REG.VI_X_SCALE & 0xFFF) / 1024.0f, (*REG.VI_Y_SCALE & 0xFFF) / 1024.0f);
 
 		u32 uc_start = *(u32*)&DMEM[0x0FD0];
+		u32 uc_size = *(u32*)&DMEM[0x0FD4];
 		u32 uc_dstart = *(u32*)&DMEM[0x0FD8];
 		u32 uc_dsize = *(u32*)&DMEM[0x0FDC];
 
+		uc_size = (uc_size == 0) ? 4096 : uc_size;
+
 		if ((uc_start != RSP.uc_start) || (uc_dstart != RSP.uc_dstart))
-			gSPLoadUcodeEx(uc_start, uc_dstart, uc_dsize);
+			gSPLoadUcodeEx(uc_start, uc_size, uc_dstart, uc_dsize);
 
 		depthBufferList().setNotCleared();
 

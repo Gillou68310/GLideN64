@@ -148,7 +148,7 @@ struct gSPInfo
 
 extern gSPInfo gSP;
 
-void gSPLoadUcodeEx( u32 uc_start, u32 uc_dstart, u16 uc_dsize );
+void gSPLoadUcodeEx( u32 uc_start, u16 uc_size, u32 uc_dstart, u16 uc_dsize );
 void gSPNoOp();
 void gSPMatrix( u32 matrix, u8 param );
 void gSPDMAMatrix( u32 matrix, u8 index, u8 multiply );

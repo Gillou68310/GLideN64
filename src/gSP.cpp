@@ -129,18 +129,18 @@ f32 identityMatrix[4][4] =
 	{ 0.0f, 0.0f, 0.0f, 1.0f }
 };
 
-void gSPLoadUcodeEx( u32 uc_start, u32 uc_dstart, u16 uc_dsize )
+void gSPLoadUcodeEx( u32 uc_start, u16 uc_size, u32 uc_dstart, u16 uc_dsize )
 {
 	gSP.matrix.modelViewi = 0;
 	gSP.changed |= CHANGED_MATRIX | CHANGED_LIGHT | CHANGED_LOOKAT;
 	gSP.status[0] = gSP.status[1] = gSP.status[2] = gSP.status[3] = 0;
 
-	if ((((uc_start & 0x1FFFFFFF) + 4096) > RDRAMSize) || (((uc_dstart & 0x1FFFFFFF) + uc_dsize) > RDRAMSize)) {
+	if ((((uc_start & 0x1FFFFFFF) + uc_size) > RDRAMSize) || (((uc_dstart & 0x1FFFFFFF) + uc_dsize) > RDRAMSize)) {
 		DebugMsg(DEBUG_NORMAL|DEBUG_ERROR, "gSPLoadUcodeEx out of RDRAM\n");
 		return;
 	}
 
-	GBI.loadMicrocode(uc_start, uc_dstart, uc_dsize);
+	GBI.loadMicrocode(uc_start, uc_size, uc_dstart, uc_dsize);
 	RSP.uc_start = uc_start;
 	RSP.uc_dstart = uc_dstart;
 

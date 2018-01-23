@@ -522,7 +522,7 @@ struct GBIInfo
 
 	void init();
 	void destroy();
-	void loadMicrocode(u32 uc_start, u32 uc_dstart, u16 uc_dsize);
+	void loadMicrocode(u32 uc_start, u16 uc_size, u32 uc_dstart, u16 uc_dsize);
 	u32 getMicrocodeType() const {return m_pCurrent != nullptr ? m_pCurrent->type : NONE;}
 	bool isHWLSupported() const;
 	void setHWLSupported(bool _supported);

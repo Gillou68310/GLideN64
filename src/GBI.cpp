@@ -66,7 +66,7 @@ SpecialMicrocodeInfo specialMicrocodes[] =
 	{ T3DUX,		false,	true,	0xbad437f2, "T3DUX vers 0.83 for Toukon Road" },
 	{ T3DUX,		false,	true,	0xd0a1aa3d, "T3DUX vers 0.85 for Toukon Road 2" },
 	{ F3DEX2ACCLAIM,true,	true,	0xe44df568, "Acclaim games: Turok2 & 3, Armories and South park" },
-	{ ZSortBOSS,	false,	false,  0x553538cc, "World Driver Championship" },
+	{ ZSortBOSS,	false,	false,  0x760ada25, "World Driver Championship" },
 	{ ZSortBOSS,	false,	false,  0x6a76f8dd, "Stunt Racer" }
 };
 
@@ -323,7 +323,7 @@ bool GBIInfo::_makeExistingMicrocodeCurrent(u32 uc_start, u32 uc_dstart, u32 uc_
 	return true;
 }
 
-void GBIInfo::loadMicrocode(u32 uc_start, u32 uc_dstart, u16 uc_dsize)
+void GBIInfo::loadMicrocode(u32 uc_start, u16 uc_size, u32 uc_dstart, u16 uc_dsize)
 {
 	if (_makeExistingMicrocodeCurrent(uc_start, uc_dstart, uc_dsize))
 		return;
@@ -340,7 +340,7 @@ void GBIInfo::loadMicrocode(u32 uc_start, u32 uc_dstart, u16 uc_dsize)
 	current.type = NONE;
 
 	// See if we can identify it by CRC
-	const u32 uc_crc = CRC_Calculate_Strict( 0xFFFFFFFF, &RDRAM[uc_start & 0x1FFFFFFF], 4096 );
+	const u32 uc_crc = CRC_Calculate_Strict( 0xFFFFFFFF, &RDRAM[uc_start & 0x1FFFFFFF], uc_size );
 	const u32 numSpecialMicrocodes = sizeof(specialMicrocodes) / sizeof(SpecialMicrocodeInfo);
 	for (u32 i = 0; i < numSpecialMicrocodes; ++i) {
 		if (uc_crc == specialMicrocodes[i].crc) {

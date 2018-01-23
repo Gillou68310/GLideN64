@@ -47,7 +47,7 @@ void F3DEX_Branch_Z( u32 w0, u32 w1 )
 
 void F3DEX_Load_uCode( u32 w0, u32 w1 )
 {
-	gSPLoadUcodeEx( w1, gDP.half_1, _SHIFTR( w0, 0, 16 ) + 1 );
+	gSPLoadUcodeEx( w1, 4096, gDP.half_1, _SHIFTR( w0, 0, 16 ) + 1 );
 }
 
 void F3DEX_Init()
