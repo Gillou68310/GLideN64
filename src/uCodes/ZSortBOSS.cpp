@@ -21,6 +21,10 @@
 #define DEFAULT		0
 #define PROCESSED	1
 
+#define MI_INTR_SP 0x01
+#define WAITING_SIG3_CLEARED 0x00080000
+#define WAITING_SIG0_SET 0x01000000
+
 struct ZSortBOSSState {
 	u32 maindl;
 	u32 subdl;
@@ -49,6 +53,7 @@ void ZSortBOSS_EndMainDL( u32, u32 )
 
 		if((*REG.SP_STATUS & 0x80) == 0) {
 			// wait for sig0
+			*REG.SP_STATUS |= WAITING_SIG0_SET;
 			RSP.PC[RSP.PCi] -= 8;
 			RSP.infloop = true;
 			RSP.halt = true;
@@ -82,13 +87,14 @@ void ZSortBOSS_EndSubDL( u32, u32 )
 void ZSortBOSS_WaitSignal( u32 , u32 )
 {
 	if(!gstate.waiting_for_signal) {
-		// *REG.MI_INTR |= MI_INTR_SP;
+		*REG.MI_INTR |= MI_INTR_SP;
 		*REG.SP_STATUS &= ~0x300;  // clear sig1 | sig2
 		*REG.SP_STATUS |= 0x400;   // set sig3
 	}
 
 	if((*REG.SP_STATUS & 0x400)) {
 		// wait !sig3
+		*REG.SP_STATUS |= WAITING_SIG3_CLEARED;
 		RSP.PC[RSP.PCi] -= 8;
 		RSP.infloop = true;
 		RSP.halt = true;
