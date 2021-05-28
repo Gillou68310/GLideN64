@@ -403,6 +403,7 @@ if(NEON_OPT)
     Neon/3DMathNeon.cpp
     Neon/gSPNeon.cpp
     Neon/RSP_LoadMatrixNeon.cpp
+    Neon/WriteToRDRAM_Neon.cpp
   )
   list(REMOVE_ITEM GLideN64_SOURCES
     3DMath.cpp
